@@ -1,65 +1,40 @@
 #!/usr/bin/python3
-# Check Examples
+def to_subtract(list_num):
+    to_sub = 0
+    max_list = max(list_num)
 
-# python 3.7.1
+    for n in list_num:
+        if max_list > n:
+            to_sub += n
 
-thousands = ["MMM", "MM", "M"]
-hundreds = ["CM", "DCCC", "DCC", "DC", "D",
-            "CD", "CCC", "CC", "C"]
-tens = ["XC", "LXXX", "LXX", "LX", "L",
-        "XL", "XXX", "XX", "X"]
-digits = ["IX", "VIII", "VII", "VI", "V",
-          "IV", "III", "II", "I"]
-
-
-def check_digit(string, nums):
-    for i in nums:
-        if i in string:
-            return list(reversed(nums)).index(i) + 1
-    return -1
-
-
-def convert_roman_to_int(string):
-    thousand = check_digit(string, thousands)
-    if thousand != -1:
-        delete = thousands[thousand - 1]
-        string = string.replace(delete, '')
-    else:
-        thousand = 0
-    hundred = check_digit(string, hundreds)
-    if hundred != -1:
-        delete = hundreds[hundred - 1]
-        string = string.replace(delete, '')
-    else:
-        hundred = 0
-    ten = check_digit(string, tens)
-    if ten != -1:
-        delete = tens[ten - 1]
-        string = string.replace(delete, '')
-    else:
-        ten = 0
-    digit = check_digit(string, digits)
-    if digit != -1:
-        delete = digits[digit - 1]
-        string = string.replace(delete, '')
-    else:
-        digit = 0
-    return thousand * 1000 + hundred * 100 + ten * 10 + digit
-
-
-def check_input(string):
-    for i in string:
-        if i not in 'MCDLXVI':
-            return False
-    return True
+    return (max_list - to_sub)
 
 
 def roman_to_int(roman_string):
-    if roman_string is None:
+    if not roman_string:
         return 0
+
     if not isinstance(roman_string, str):
         return 0
-    if not check_input(roman_string):
-        return 0
-    result = convert_roman_to_int(roman_string)
-    return result
+
+    rom_n = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    list_keys = list(rom_n.keys())
+
+    num = 0
+    last_rom = 0
+    list_num = [0]
+
+    for ch in roman_string:
+        for r_num in list_keys:
+            if r_num == ch:
+                if rom_n.get(ch) <= last_rom:
+                    num += to_subtract(list_num)
+                    list_num = [rom_n.get(ch)]
+                else:
+                    list_num.append(rom_n.get(ch))
+
+                last_rom = rom_n.get(ch)
+
+    num += to_subtract(list_num)
+
+    return (num)
