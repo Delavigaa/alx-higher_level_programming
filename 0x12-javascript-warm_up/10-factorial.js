@@ -1,15 +1,12 @@
 #!/usr/bin/node
-const fint = process.argv[2];
-function fact (a) {
-  a = parseInt(a);
-  if (a === undefined || a <= 1) {
-    return 1;
-  } else {
-    if (a < 333) {
-      return a * fact(a - 1);
-    } else {
-      return 'Infinity';
-    }
+function factorial (n) {
+  if (n < 0) {
+    return (-1);
   }
+  if (n === 0 || isNaN(n)) {
+    return (1);
+  }
+  return (n * factorial(n - 1));
 }
-console.log(fact(fint));
+
+console.log(factorial(Number(process.argv[2])));
