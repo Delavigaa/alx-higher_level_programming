@@ -1,11 +1,11 @@
 #!/usr/bin/node
-const firstArg = process.argv[2];
-const chr = 'x';
-if (!isNaN(parseInt(firstArg))) {
-  let intArg = firstArg;
-  for (intArg; intArg > 0; intArg--) {
-    console.log(chr.repeat(firstArg));
-  }
+if (process.argv[2] === undefined || isNaN(process.argv[2])) {
+  console.log('Missing size');
 } else {
-  console.log('Missing number of occurrences');
+  const x = Number(process.argv[2]);
+  let i = 0;
+  while (i < x) {
+    console.log('X'.repeat(x));
+    i++;
+  }
 }
